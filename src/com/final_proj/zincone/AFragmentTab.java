@@ -1,4 +1,4 @@
-package com.example.tweetbeats;
+package com.final_proj.zincone;
 
 
 import java.util.Arrays;
@@ -8,10 +8,14 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.handmark.pulltorefresh.extras.listfragment.PullToRefreshBaseListFragment;
 import com.handmark.pulltorefresh.extras.listfragment.PullToRefreshListFragment;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 
@@ -38,14 +42,40 @@ protected PullToRefreshListView onCreatePullToRefreshListView(
 	mListItems.addAll(Arrays.asList(mStrings));
 	mAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, mListItems);
 
+	mPullToRefreshListView.setOnRefreshListener(new OnRefreshListener() {
+
+		@Override
+		public void onRefresh(PullToRefreshBase refreshView) {
+			new GetDataTask().execute();
+		}
+		
+	});
+	
+
 	// You can also just use setListAdapter(mAdapter) or
 	// mPullRefreshListView.setAdapter(mAdapter)
 	mPullToRefreshListView.setAdapter(mAdapter);
+	
+	//mPullRefreshListFragment.setListShown(true);
 
-	mPullRefreshListFragment.setListShown(true);
+
+	//mPullToRefreshListView.onRefreshComplete();
+	
+	mPullToRefreshListView.setVisibility(View.VISIBLE);
+	
+	
 	
 	return mPullToRefreshListView;
 }
+
+public void onStart() {
+	super.onStart();
+	this.setListShown(true);
+}
+
+
+
+
 
 private class GetDataTask extends AsyncTask<Void, Void, String[]> {
 
@@ -53,7 +83,7 @@ private class GetDataTask extends AsyncTask<Void, Void, String[]> {
 	protected String[] doInBackground(Void... params) {
 		// Simulates a background job.
 		try {
-			Thread.sleep(4000);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 		}
 		return mStrings;
