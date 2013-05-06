@@ -34,10 +34,10 @@ public class MainActivity extends Activity {
 		
 		Fragment genre = new PullToRefreshListFragment();
 		
-		Fragment beats = new AFragmentTab();
+		Fragment beats = new Tweets();
 		//ActionBar.Tab profileTab = actionBar.newTab().setText("Profile");
-		genreTab.setTabListener(new TabListener<AFragmentTab>(this, "genre", AFragmentTab.class));
-		beatsTab.setTabListener(new TabListener<AFragmentTab>(this, "beats", AFragmentTab.class));
+		genreTab.setTabListener(new TabListener<Tweets>(this, "genre", Tweets.class));
+		beatsTab.setTabListener(new TabListener<Tweets>(this, "beats", Tweets.class));
 		
 		actionBar.addTab(genreTab);
 		actionBar.addTab(beatsTab);
