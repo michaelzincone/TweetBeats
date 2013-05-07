@@ -4,7 +4,6 @@ package com.final_proj.zincone;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -22,6 +21,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -57,7 +57,7 @@ public class Tweets extends PullToRefreshBaseListFragment<PullToRefreshListView>
 	ConfigurationBuilder cb;
 	TwitterFactory tf;
 	Twitter twitter;
-
+	ArrayList<String> genres;
 
 @Override
 protected PullToRefreshListView onCreatePullToRefreshListView(
@@ -67,7 +67,20 @@ protected PullToRefreshListView onCreatePullToRefreshListView(
 	//initialize arraylist that holds tweeter info
 		list = new ArrayList<HashMap<String,String>>();
 
-	
+		genres = new ArrayList<String>();
+		
+		
+		genres.add("Country");
+		genres.add("EDM");
+		genres.add("Folk");
+		genres.add("Rap");
+		genres.add("House");
+		genres.add("Indie");
+		genres.add("Jazz");
+		genres.add("Latin");
+		genres.add("Punk");
+		genres.add("Reggae");
+		genres.add("Rock");
 
 
 	
@@ -101,11 +114,14 @@ protected PullToRefreshListView onCreatePullToRefreshListView(
 	};
 	
 	mPullToRefreshListView = new PullToRefreshListView(context);
-	
+	/*
 	mListItems = new LinkedList<String>();
 	mListItems.addAll(Arrays.asList(mStrings));
 	mAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, mListItems);
-
+	*/
+	
+	new GetDataTask().execute();
+	
 	mPullToRefreshListView.setOnRefreshListener(new OnRefreshListener() {
 
 		@Override
@@ -115,7 +131,15 @@ protected PullToRefreshListView onCreatePullToRefreshListView(
 		
 	});
 	
+	mPullToRefreshListView.setOnFocusChangeListener(new OnFocusChangeListener() {
 
+		@Override
+		public void onFocusChange(View arg0, boolean arg1) {
+			Log.v("MZ", "ON FOCUS CHANGED");
+			
+		}
+		
+	});
 	// You can also just use setListAdapter(mAdapter) or
 	// mPullRefreshListView.setAdapter(mAdapter)
 	mPullToRefreshListView.setAdapter(adapter);
@@ -131,6 +155,24 @@ protected PullToRefreshListView onCreatePullToRefreshListView(
 	
 	return mPullToRefreshListView;
 }
+
+
+
+@Override
+public void setUserVisibleHint(boolean isVisibleToUser) {
+    super.setUserVisibleHint(isVisibleToUser);
+
+    if (isVisibleToUser == true) { 
+        Log.v("MZ", "this fragment is now visible");
+        new GetDataTask().execute();
+    }
+
+    else if (isVisibleToUser == false) {  
+        Log.v("MZ", "this fragment is now invisible");
+
+    }
+}
+
 
 public void onStart() {
 	super.onStart();
@@ -192,8 +234,9 @@ private class GetDataTask extends AsyncTask<Void, Void, Void> {
 		//Twitter twitter = new TwitterFactory().getInstance();
 			
 		//twitter.setOAuthConsumer(CONSUMER_KEY, CONSUMER_KEY_SECRET);
-
-		 Query query = new Query("#edm");
+		
+		 Query query = new Query("#" + genres.get(Genre.SELECTED_INDEX));
+		 query.count(30);
 		 QueryResult result = null;
 		 
 		try {
@@ -205,14 +248,15 @@ private class GetDataTask extends AsyncTask<Void, Void, Void> {
 		
 		HashMap<String,String> hashmap;
 		  int counter = 0;
+		  
+		  list.clear();
 		    for (twitter4j.Status status : result.getTweets()) {
-		      //  System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
-		    	if (counter < 10) {
+		      
+		    	if (counter < 30) {
 		    	hashmap = new HashMap<String,String>();
 		    	hashmap.put("username", status.getUser().getScreenName());
 		    	hashmap.put("tweet",  status.getText());
 		    	hashmap.put("pic", status.getUser().getProfileImageURL());
-		    	Log.v("MZ",status.getUser().getProfileImageURL());
 		    	
 		    	list.add(hashmap);
 		    	} else break;
@@ -235,13 +279,12 @@ private class GetDataTask extends AsyncTask<Void, Void, Void> {
 		mPullToRefreshListView.onRefreshComplete();
 		
 	}
+	
+	
+	
 }
 
-private String[] mStrings = { "Abbaye de Belloc", "Abbaye du Mont des Cats", "Abertam", "Abondance", "Ackawi",
-		"Acorn", "Adelost", "Affidelice au Chablis", "Afuega'l Pitu", "Airag", "Airedale", "Aisy Cendre",
-		"Allgauer Emmentaler", "Abbaye de Belloc", "Abbaye du Mont des Cats", "Abertam", "Abondance", "Ackawi",
-		"Acorn", "Adelost", "Affidelice au Chablis", "Afuega'l Pitu", "Airag", "Airedale", "Aisy Cendre",
-		"Allgauer Emmentaler" };
+
 
 }  
   

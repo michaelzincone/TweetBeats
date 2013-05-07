@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+     	android:layout_height="wrap_content"
         android:background="#2daae2"
         android:orientation="horizontal">
       <!--  <ImageView
@@ -39,6 +39,7 @@
 
     <TextView
         android:id="@+id/tweeter"
+        android:layout_marginLeft="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -50,18 +51,22 @@
         android:id="@+id/tweet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
         android:layout_below="@+id/tweeter"
+        android:layout_toRightOf="@+id/userImage"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+    
     <ImageView
        android:id="@+id/userImage"
        android:layout_width="65dp"
        android:layout_marginTop="5dp"
-       android:layout_marginBottom="5dp"
+       android:layout_marginLeft="5dp"
+       android:paddingBottom="5dp"
+       android:layout_marginRight="5dp"
+       android:layout_centerVertical="true"
        android:layout_height="65dp"
        android:scaleType="fitXY"
        android:layout_below="@+id/tweeter"
-	   android:layout_centerVertical="true"
-	   android:paddingRight="4dp"
        android:layout_alignParentLeft="true" /> 
     
 </RelativeLayout>

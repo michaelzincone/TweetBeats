@@ -15,6 +15,8 @@ public class MainActivity extends Activity {
 	
 	Fragment beats;
 	
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,15 +30,13 @@ public class MainActivity extends Activity {
 		
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		
+		ActionBar.Tab beatsTab = actionBar.newTab().setText("Tweets");
 		ActionBar.Tab genreTab = actionBar.newTab().setText("Genre");
 		
-		ActionBar.Tab beatsTab = actionBar.newTab().setText("Beats");
 		
-		Fragment genre = new PullToRefreshListFragment();
 		
-		Fragment beats = new Tweets();
 		//ActionBar.Tab profileTab = actionBar.newTab().setText("Profile");
-		genreTab.setTabListener(new TabListener<Tweets>(this, "genre", Tweets.class));
+		genreTab.setTabListener(new TabListener<Genre>(this, "genre", Genre.class));
 		beatsTab.setTabListener(new TabListener<Tweets>(this, "beats", Tweets.class));
 		
 		actionBar.addTab(genreTab);
