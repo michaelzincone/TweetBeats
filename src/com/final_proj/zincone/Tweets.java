@@ -19,14 +19,17 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tweetbeats.R;
 import com.handmark.pulltorefresh.extras.listfragment.PullToRefreshBaseListFragment;
@@ -38,6 +41,8 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 public class Tweets extends PullToRefreshBaseListFragment<PullToRefreshListView>
 {
+	
+	//declare variables
 	 private LinkedList<String> mListItems;
 	 private ArrayAdapter<String> mAdapter;
 	 private PullToRefreshListFragment mPullRefreshListFragment;
@@ -63,13 +68,13 @@ public class Tweets extends PullToRefreshBaseListFragment<PullToRefreshListView>
 protected PullToRefreshListView onCreatePullToRefreshListView(
 		LayoutInflater inflater, Bundle savedInstanceState) {
 	
-	//set up twitter API access
-	//initialize arraylist that holds tweeter info
+		
+	
 		list = new ArrayList<HashMap<String,String>>();
 
 		genres = new ArrayList<String>();
 		
-		
+		//set up genres to be read for hashtags
 		genres.add("Country");
 		genres.add("EDM");
 		genres.add("Folk");
@@ -81,12 +86,16 @@ protected PullToRefreshListView onCreatePullToRefreshListView(
 		genres.add("Punk");
 		genres.add("Reggae");
 		genres.add("Rock");
+		
+		
 
 
 	
 	
 	context = this.getActivity();
 	
+	
+	//initalize simpleadapter to handle rows of content
 	adapter = new SimpleAdapter(context, list, R.layout.row,
 			new String[] { "username", "tweet", "pic"}, new int[] {
 					R.id.tweeter, R.id.tweet, R.id.userImage }) {
@@ -120,6 +129,7 @@ protected PullToRefreshListView onCreatePullToRefreshListView(
 	mAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, mListItems);
 	*/
 	
+	//refresh the listview
 	new GetDataTask().execute();
 	
 	mPullToRefreshListView.setOnRefreshListener(new OnRefreshListener() {
@@ -135,8 +145,7 @@ protected PullToRefreshListView onCreatePullToRefreshListView(
 
 		@Override
 		public void onFocusChange(View arg0, boolean arg1) {
-			Log.v("MZ", "ON FOCUS CHANGED");
-			
+			//test onfocuschange
 		}
 		
 	});
@@ -144,13 +153,7 @@ protected PullToRefreshListView onCreatePullToRefreshListView(
 	// mPullRefreshListView.setAdapter(mAdapter)
 	mPullToRefreshListView.setAdapter(adapter);
 	
-	//mPullRefreshListFragment.setListShown(true);
 
-
-	//mPullToRefreshListView.onRefreshComplete();
-	
-	//mPullToRefreshListView.setVisibility(View.VISIBLE);
-	
 	
 	
 	return mPullToRefreshListView;
@@ -163,6 +166,7 @@ public void setUserVisibleHint(boolean isVisibleToUser) {
     super.setUserVisibleHint(isVisibleToUser);
 
     if (isVisibleToUser == true) { 
+    	//used to check fragment visibility
         Log.v("MZ", "this fragment is now visible");
         new GetDataTask().execute();
     }
@@ -184,6 +188,7 @@ private class ImgDownload extends AsyncTask {
     private ImageView view;
     private Bitmap pic;
 
+    //imgdownload constructor. reads in URL and imageview
     private ImgDownload(String requestUrl, ImageView view) {
         this.requestUrl = requestUrl;
         this.view = view;
@@ -204,6 +209,7 @@ private class ImgDownload extends AsyncTask {
 
     @Override
     protected void onPostExecute(Object o) {
+    	//update UI
         view.setImageBitmap(pic);
     }
 }
@@ -212,6 +218,12 @@ private class ImgDownload extends AsyncTask {
 
 private class GetDataTask extends AsyncTask<Void, Void, Void> {
 
+	protected void onPreExecute() {
+	
+		
+		
+	}
+	
 	@Override
 	protected Void doInBackground(Void... voids) {
 		// Simulates a background job.
@@ -221,6 +233,7 @@ private class GetDataTask extends AsyncTask<Void, Void, Void> {
 		} catch (InterruptedException e) {
 		}
 	*/
+		//connect to twitter API using Twitter4j
 		cb = new ConfigurationBuilder();
 		cb.setDebugEnabled(true)
 		.setOAuthConsumerKey("bDfcAsCzCAyTtKFmdamZw")
@@ -251,7 +264,7 @@ private class GetDataTask extends AsyncTask<Void, Void, Void> {
 		  
 		  list.clear();
 		    for (twitter4j.Status status : result.getTweets()) {
-		      
+		      //add first 30 statuses
 		    	if (counter < 30) {
 		    	hashmap = new HashMap<String,String>();
 		    	hashmap.put("username", status.getUser().getScreenName());
@@ -272,8 +285,7 @@ private class GetDataTask extends AsyncTask<Void, Void, Void> {
 	protected void onPostExecute(Void v) {
 		
 		
-		//mListItems.addFirst("Added after refresh...");
-		//mAdapter.notifyDataSetChanged();
+		//update UI
 		adapter.notifyDataSetChanged();
 		// Call onRefreshComplete when the list has been refreshed.
 		mPullToRefreshListView.onRefreshComplete();

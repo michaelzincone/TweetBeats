@@ -1,0 +1,866 @@
+diff --git a/.DS_Store b/.DS_Store
+new file mode 100644
+index 0000000..5008ddf
+Binary files /dev/null and b/.DS_Store differ
+diff --git a/AndroidManifest.xml b/AndroidManifest.xml
+index 1a5821f..8f63a7b 100644
+--- a/AndroidManifest.xml
++++ b/AndroidManifest.xml
+@@ -4,10 +4,13 @@
+     android:versionCode="1"
+     android:versionName="1.0" >
+ 
+-   <!--  <uses-sdk
++   
++    <uses-sdk
+         android:minSdkVersion="11"
+-        android:targetSdkVersion="17" /> -->
+-
++        android:targetSdkVersion="17" /> 
++        
++    <uses-permission android:name="android.permission.INTERNET" />
++    
+     <application
+         android:allowBackup="true"
+         android:icon="@drawable/ic_launcher"
+diff --git a/bin/AndroidManifest.xml b/bin/AndroidManifest.xml
+index 1a5821f..8f63a7b 100644
+--- a/bin/AndroidManifest.xml
++++ b/bin/AndroidManifest.xml
+@@ -4,10 +4,13 @@
+     android:versionCode="1"
+     android:versionName="1.0" >
+ 
+-   <!--  <uses-sdk
++   
++    <uses-sdk
+         android:minSdkVersion="11"
+-        android:targetSdkVersion="17" /> -->
+-
++        android:targetSdkVersion="17" /> 
++        
++    <uses-permission android:name="android.permission.INTERNET" />
++    
+     <application
+         android:allowBackup="true"
+         android:icon="@drawable/ic_launcher"
+diff --git a/bin/R.txt b/bin/R.txt
+index 84898e0..3fd4eba 100644
+--- a/bin/R.txt
++++ b/bin/R.txt
+@@ -34,7 +34,7 @@ int drawable ic_launcher 0x7f020002
+ int drawable indicator_arrow 0x7f020003
+ int drawable indicator_bg_bottom 0x7f020004
+ int drawable indicator_bg_top 0x7f020005
+-int id action_settings 0x7f050012
++int id action_settings 0x7f050015
+ int id both 0x7f050003
+ int id disabled 0x7f050000
+ int id fl_inner 0x7f05000d
+@@ -51,12 +51,16 @@ int id pull_to_refresh_sub_text 0x7f050011
+ int id pull_to_refresh_text 0x7f050010
+ int id rotate 0x7f050007
+ int id scrollview 0x7f05000b
++int id tweet 0x7f050013
++int id tweeter 0x7f050012
++int id userImage 0x7f050014
+ int id viewpager 0x7f05000c
+ int id webview 0x7f05000a
+ int layout activity_main 0x7f030000
+ int layout need_this_for_maven 0x7f030001
+ int layout pull_to_refresh_header_horizontal 0x7f030002
+ int layout pull_to_refresh_header_vertical 0x7f030003
++int layout row 0x7f030004
+ int menu main 0x7f090000
+ int string action_settings 0x7f070007
+ int string app_name 0x7f070006
+diff --git a/bin/classes/com/example/tweetbeats/R$id.class b/bin/classes/com/example/tweetbeats/R$id.class
+index 8de3adb..ac64345 100644
+Binary files a/bin/classes/com/example/tweetbeats/R$id.class and b/bin/classes/com/example/tweetbeats/R$id.class differ
+diff --git a/bin/classes/com/example/tweetbeats/R$layout.class b/bin/classes/com/example/tweetbeats/R$layout.class
+index 5b531be..b055c3d 100644
+Binary files a/bin/classes/com/example/tweetbeats/R$layout.class and b/bin/classes/com/example/tweetbeats/R$layout.class differ
+diff --git a/bin/classes/com/example/tweetbeats/R$menu.class b/bin/classes/com/example/tweetbeats/R$menu.class
+index fc1e313..f90640b 100644
+Binary files a/bin/classes/com/example/tweetbeats/R$menu.class and b/bin/classes/com/example/tweetbeats/R$menu.class differ
+diff --git a/bin/classes/com/example/tweetbeats/R$string.class b/bin/classes/com/example/tweetbeats/R$string.class
+index 6fca657..56af6d8 100644
+Binary files a/bin/classes/com/example/tweetbeats/R$string.class and b/bin/classes/com/example/tweetbeats/R$string.class differ
+diff --git a/bin/classes/com/example/tweetbeats/R$style.class b/bin/classes/com/example/tweetbeats/R$style.class
+index 3850155..3cef4db 100644
+Binary files a/bin/classes/com/example/tweetbeats/R$style.class and b/bin/classes/com/example/tweetbeats/R$style.class differ
+diff --git a/bin/classes/com/example/tweetbeats/R$styleable.class b/bin/classes/com/example/tweetbeats/R$styleable.class
+index 9e5c0b7..39c6785 100644
+Binary files a/bin/classes/com/example/tweetbeats/R$styleable.class and b/bin/classes/com/example/tweetbeats/R$styleable.class differ
+diff --git a/bin/classes/com/final_proj/zincone/AFragmentTab$1.class b/bin/classes/com/final_proj/zincone/AFragmentTab$1.class
+deleted file mode 100644
+index c5623b4..0000000
+Binary files a/bin/classes/com/final_proj/zincone/AFragmentTab$1.class and /dev/null differ
+diff --git a/bin/classes/com/final_proj/zincone/AFragmentTab$GetDataTask.class b/bin/classes/com/final_proj/zincone/AFragmentTab$GetDataTask.class
+deleted file mode 100644
+index bb42fa2..0000000
+Binary files a/bin/classes/com/final_proj/zincone/AFragmentTab$GetDataTask.class and /dev/null differ
+diff --git a/bin/classes/com/final_proj/zincone/AFragmentTab.class b/bin/classes/com/final_proj/zincone/AFragmentTab.class
+deleted file mode 100644
+index f819930..0000000
+Binary files a/bin/classes/com/final_proj/zincone/AFragmentTab.class and /dev/null differ
+diff --git a/bin/classes/com/final_proj/zincone/Genre$1.class b/bin/classes/com/final_proj/zincone/Genre$1.class
+new file mode 100644
+index 0000000..1a5e54f
+Binary files /dev/null and b/bin/classes/com/final_proj/zincone/Genre$1.class differ
+diff --git a/bin/classes/com/final_proj/zincone/Genre.class b/bin/classes/com/final_proj/zincone/Genre.class
+new file mode 100644
+index 0000000..a2f3ed0
+Binary files /dev/null and b/bin/classes/com/final_proj/zincone/Genre.class differ
+diff --git a/bin/classes/com/final_proj/zincone/MainActivity.class b/bin/classes/com/final_proj/zincone/MainActivity.class
+index 1832ff4..e05e321 100644
+Binary files a/bin/classes/com/final_proj/zincone/MainActivity.class and b/bin/classes/com/final_proj/zincone/MainActivity.class differ
+diff --git a/bin/classes/com/final_proj/zincone/Tweets$1.class b/bin/classes/com/final_proj/zincone/Tweets$1.class
+new file mode 100644
+index 0000000..6ca47d5
+Binary files /dev/null and b/bin/classes/com/final_proj/zincone/Tweets$1.class differ
+diff --git a/bin/classes/com/final_proj/zincone/Tweets$2.class b/bin/classes/com/final_proj/zincone/Tweets$2.class
+new file mode 100644
+index 0000000..9814ce2
+Binary files /dev/null and b/bin/classes/com/final_proj/zincone/Tweets$2.class differ
+diff --git a/bin/classes/com/final_proj/zincone/Tweets$3.class b/bin/classes/com/final_proj/zincone/Tweets$3.class
+new file mode 100644
+index 0000000..fe54458
+Binary files /dev/null and b/bin/classes/com/final_proj/zincone/Tweets$3.class differ
+diff --git a/bin/classes/com/final_proj/zincone/Tweets$GetDataTask.class b/bin/classes/com/final_proj/zincone/Tweets$GetDataTask.class
+new file mode 100644
+index 0000000..c718f25
+Binary files /dev/null and b/bin/classes/com/final_proj/zincone/Tweets$GetDataTask.class differ
+diff --git a/bin/classes/com/final_proj/zincone/Tweets$ImgDownload.class b/bin/classes/com/final_proj/zincone/Tweets$ImgDownload.class
+new file mode 100644
+index 0000000..58f33da
+Binary files /dev/null and b/bin/classes/com/final_proj/zincone/Tweets$ImgDownload.class differ
+diff --git a/bin/classes/com/final_proj/zincone/Tweets.class b/bin/classes/com/final_proj/zincone/Tweets.class
+new file mode 100644
+index 0000000..a461a2d
+Binary files /dev/null and b/bin/classes/com/final_proj/zincone/Tweets.class differ
+diff --git a/bin/dexedLibs/android-support-v4-f1774a1f81d0f8f0e398f64c9c420535.jar b/bin/dexedLibs/android-support-v4-f1774a1f81d0f8f0e398f64c9c420535.jar
+index 38a21a4..cdf84ee 100644
+Binary files a/bin/dexedLibs/android-support-v4-f1774a1f81d0f8f0e398f64c9c420535.jar and b/bin/dexedLibs/android-support-v4-f1774a1f81d0f8f0e398f64c9c420535.jar differ
+diff --git a/bin/dexedLibs/library-25e8e75b7be3126014cafae464a05135.jar b/bin/dexedLibs/library-25e8e75b7be3126014cafae464a05135.jar
+index 7fe8961..6d8ad68 100644
+Binary files a/bin/dexedLibs/library-25e8e75b7be3126014cafae464a05135.jar and b/bin/dexedLibs/library-25e8e75b7be3126014cafae464a05135.jar differ
+diff --git a/bin/dexedLibs/pulltorefreshlistfragment-c4a9f2c8090d09f40b7fe8e4bb49dd28.jar b/bin/dexedLibs/pulltorefreshlistfragment-c4a9f2c8090d09f40b7fe8e4bb49dd28.jar
+index 36af9ae..57b4bc8 100644
+Binary files a/bin/dexedLibs/pulltorefreshlistfragment-c4a9f2c8090d09f40b7fe8e4bb49dd28.jar and b/bin/dexedLibs/pulltorefreshlistfragment-c4a9f2c8090d09f40b7fe8e4bb49dd28.jar differ
+diff --git a/bin/dexedLibs/pulltorefreshviewpager-cda8a3066ebd601987a2c0635e170464.jar b/bin/dexedLibs/pulltorefreshviewpager-cda8a3066ebd601987a2c0635e170464.jar
+index 1fe6e35..a5381da 100644
+Binary files a/bin/dexedLibs/pulltorefreshviewpager-cda8a3066ebd601987a2c0635e170464.jar and b/bin/dexedLibs/pulltorefreshviewpager-cda8a3066ebd601987a2c0635e170464.jar differ
+diff --git a/bin/dexedLibs/twitter4j-async-3.0.3-12295c0fd54942e9ac8116f92b01dfb2.jar b/bin/dexedLibs/twitter4j-async-3.0.3-12295c0fd54942e9ac8116f92b01dfb2.jar
+index ad02a9c..c8d0dfd 100644
+Binary files a/bin/dexedLibs/twitter4j-async-3.0.3-12295c0fd54942e9ac8116f92b01dfb2.jar and b/bin/dexedLibs/twitter4j-async-3.0.3-12295c0fd54942e9ac8116f92b01dfb2.jar differ
+diff --git a/bin/dexedLibs/twitter4j-core-3.0.3-653f785bf6fa0f0e58c060a635179ca2.jar b/bin/dexedLibs/twitter4j-core-3.0.3-653f785bf6fa0f0e58c060a635179ca2.jar
+index 4774de3..ebfcade 100644
+Binary files a/bin/dexedLibs/twitter4j-core-3.0.3-653f785bf6fa0f0e58c060a635179ca2.jar and b/bin/dexedLibs/twitter4j-core-3.0.3-653f785bf6fa0f0e58c060a635179ca2.jar differ
+diff --git a/bin/dexedLibs/twitter4j-examples-3.0.3-7f2e11d9d9831f8f6bfbcbf881bfa65c.jar b/bin/dexedLibs/twitter4j-examples-3.0.3-7f2e11d9d9831f8f6bfbcbf881bfa65c.jar
+index a591691..1e51b90 100644
+Binary files a/bin/dexedLibs/twitter4j-examples-3.0.3-7f2e11d9d9831f8f6bfbcbf881bfa65c.jar and b/bin/dexedLibs/twitter4j-examples-3.0.3-7f2e11d9d9831f8f6bfbcbf881bfa65c.jar differ
+diff --git a/bin/dexedLibs/twitter4j-media-support-3.0.3-65886d4fc74575b5fb0a9505f6586629.jar b/bin/dexedLibs/twitter4j-media-support-3.0.3-65886d4fc74575b5fb0a9505f6586629.jar
+index 436ede5..33ab8ed 100644
+Binary files a/bin/dexedLibs/twitter4j-media-support-3.0.3-65886d4fc74575b5fb0a9505f6586629.jar and b/bin/dexedLibs/twitter4j-media-support-3.0.3-65886d4fc74575b5fb0a9505f6586629.jar differ
+diff --git a/bin/dexedLibs/twitter4j-stream-3.0.3-8403878ce12bea115da0e667ecd3b1a6.jar b/bin/dexedLibs/twitter4j-stream-3.0.3-8403878ce12bea115da0e667ecd3b1a6.jar
+index 892bee1..993db20 100644
+Binary files a/bin/dexedLibs/twitter4j-stream-3.0.3-8403878ce12bea115da0e667ecd3b1a6.jar and b/bin/dexedLibs/twitter4j-stream-3.0.3-8403878ce12bea115da0e667ecd3b1a6.jar differ
+diff --git a/gen/com/example/tweetbeats/R.java b/gen/com/example/tweetbeats/R.java
+index b9e46d9..2dec5c2 100644
+--- a/gen/com/example/tweetbeats/R.java
++++ b/gen/com/example/tweetbeats/R.java
+@@ -174,7 +174,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
+         public static final int indicator_bg_top=0x7f020005;
+     }
+     public static final class id {
+-        public static final int action_settings=0x7f050012;
++        public static final int action_settings=0x7f050015;
+         public static final int both=0x7f050003;
+         public static final int disabled=0x7f050000;
+         public static final int fl_inner=0x7f05000d;
+@@ -191,6 +191,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
+         public static final int pull_to_refresh_text=0x7f050010;
+         public static final int rotate=0x7f050007;
+         public static final int scrollview=0x7f05000b;
++        public static final int tweet=0x7f050013;
++        public static final int tweeter=0x7f050012;
++        public static final int userImage=0x7f050014;
+         public static final int viewpager=0x7f05000c;
+         public static final int webview=0x7f05000a;
+     }
+@@ -199,6 +202,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
+         public static final int need_this_for_maven=0x7f030001;
+         public static final int pull_to_refresh_header_horizontal=0x7f030002;
+         public static final int pull_to_refresh_header_vertical=0x7f030003;
++        public static final int row=0x7f030004;
+     }
+     public static final class menu {
+         public static final int main=0x7f090000;
+diff --git a/res/layout/row.xml b/res/layout/row.xml
+new file mode 100644
+index 0000000..7a3061d
+--- /dev/null
++++ b/res/layout/row.xml
+@@ -0,0 +1,73 @@
++<?xml version="1.0" encoding="utf-8"?>
++<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
++        android:layout_width="fill_parent"
++     	android:layout_height="wrap_content"
++        android:background="#2daae2"
++        android:orientation="horizontal">
++      <!--  <ImageView
++                android:id="@+id/player1"
++                android:layout_marginTop="5dp"
++                android:layout_marginBottom="5dp"
++                android:layout_width="65dp"
++                android:layout_height="65dp"
++                android:scaleType="fitXY"
++                android:layout_centerVertical="true"
++                android:paddingLeft="4dp"
++                android:layout_alignParentLeft="true" />
++        <ImageView
++                android:id="@+id/player2"
++                android:layout_width="65dp"
++                   android:layout_marginTop="5dp"
++                android:layout_marginBottom="5dp"
++                android:layout_height="65dp"
++                  android:scaleType="fitXY"
++				android:layout_centerVertical="true"
++				android:paddingRight="4dp"
++				android:layout_centerHorizontal="true"
++           		android:layout_alignParentRight="true" />
++        <TextView
++                android:id="@+id/matchupInfo"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:textSize="28sp"         
++  				android:textStyle="normal"
++  				android:textColor="#000000"    
++				android:gravity="center"
++  				android:layout_centerVertical="true"
++                android:layout_toRightOf="@id/player1"
++                android:layout_toLeftOf="@id/player2" />   -->
++
++    <TextView
++        android:id="@+id/tweeter"
++        android:layout_marginLeft="5dp"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_alignParentLeft="true"
++        android:textColor="#FFFFFF"
++        android:layout_alignParentTop="true"
++        android:textAppearance="?android:attr/textAppearanceLarge" />
++
++    <TextView
++        android:id="@+id/tweet"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginRight="5dp"
++        android:layout_below="@+id/tweeter"
++        android:layout_toRightOf="@+id/userImage"
++        android:textAppearance="?android:attr/textAppearanceMedium" />
++    
++    <ImageView
++       android:id="@+id/userImage"
++       android:layout_width="65dp"
++       android:layout_marginTop="5dp"
++       android:layout_marginLeft="5dp"
++       android:paddingBottom="5dp"
++       android:layout_marginRight="5dp"
++       android:layout_centerVertical="true"
++       android:layout_height="65dp"
++       android:scaleType="fitXY"
++       android:layout_below="@+id/tweeter"
++       android:layout_alignParentLeft="true" /> 
++    
++</RelativeLayout>
++ 
+\ No newline at end of file
+diff --git a/src/com/final_proj/zincone/AFragmentTab.java b/src/com/final_proj/zincone/AFragmentTab.java
+deleted file mode 100644
+index f6d4c7f..0000000
+--- a/src/com/final_proj/zincone/AFragmentTab.java
++++ /dev/null
+@@ -1,143 +0,0 @@
+-package com.final_proj.zincone;
+-
+-
+-import java.util.Arrays;
+-import java.util.LinkedList;
+-
+-import android.content.Context;
+-import android.os.AsyncTask;
+-import android.os.Bundle;
+-import android.view.LayoutInflater;
+-import android.view.View;
+-import android.widget.ArrayAdapter;
+-import android.widget.ListView;
+-
+-import com.handmark.pulltorefresh.extras.listfragment.PullToRefreshBaseListFragment;
+-import com.handmark.pulltorefresh.extras.listfragment.PullToRefreshListFragment;
+-import com.handmark.pulltorefresh.library.PullToRefreshBase;
+-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+-import com.handmark.pulltorefresh.library.PullToRefreshListView;
+-
+-
+-public class AFragmentTab extends PullToRefreshBaseListFragment<PullToRefreshListView>
+-{
+-	 private LinkedList<String> mListItems;
+-	 private ArrayAdapter<String> mAdapter;
+-	 private PullToRefreshListFragment mPullRefreshListFragment;
+-	 Context context;
+-	 private PullToRefreshListView mPullToRefreshListView;
+-
+-	 
+-
+-
+-
+-@Override
+-protected PullToRefreshListView onCreatePullToRefreshListView(
+-		LayoutInflater inflater, Bundle savedInstanceState) {
+-	context = this.getActivity();
+-	
+-	mPullToRefreshListView = new PullToRefreshListView(context);
+-	
+-	mListItems = new LinkedList<String>();
+-	mListItems.addAll(Arrays.asList(mStrings));
+-	mAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, mListItems);
+-
+-	mPullToRefreshListView.setOnRefreshListener(new OnRefreshListener() {
+-
+-		@Override
+-		public void onRefresh(PullToRefreshBase refreshView) {
+-			new GetDataTask().execute();
+-		}
+-		
+-	});
+-	
+-
+-	// You can also just use setListAdapter(mAdapter) or
+-	// mPullRefreshListView.setAdapter(mAdapter)
+-	mPullToRefreshListView.setAdapter(mAdapter);
+-	
+-	//mPullRefreshListFragment.setListShown(true);
+-
+-
+-	//mPullToRefreshListView.onRefreshComplete();
+-	
+-	mPullToRefreshListView.setVisibility(View.VISIBLE);
+-	
+-	
+-	
+-	return mPullToRefreshListView;
+-}
+-
+-public void onStart() {
+-	super.onStart();
+-	this.setListShown(true);
+-}
+-
+-
+-
+-
+-
+-private class GetDataTask extends AsyncTask<Void, Void, String[]> {
+-
+-	@Override
+-	protected String[] doInBackground(Void... params) {
+-		// Simulates a background job.
+-		try {
+-			Thread.sleep(2000);
+-		} catch (InterruptedException e) {
+-		}
+-		return mStrings;
+-	}
+-
+-	@Override
+-	protected void onPostExecute(String[] result) {
+-		
+-		
+-		mListItems.addFirst("Added after refresh...");
+-		mAdapter.notifyDataSetChanged();
+-
+-		// Call onRefreshComplete when the list has been refreshed.
+-		mPullToRefreshListView.onRefreshComplete();
+-		
+-		
+-
+-		super.onPostExecute(result);
+-	}
+-}
+-
+-private String[] mStrings = { "Abbaye de Belloc", "Abbaye du Mont des Cats", "Abertam", "Abondance", "Ackawi",
+-		"Acorn", "Adelost", "Affidelice au Chablis", "Afuega'l Pitu", "Airag", "Airedale", "Aisy Cendre",
+-		"Allgauer Emmentaler", "Abbaye de Belloc", "Abbaye du Mont des Cats", "Abertam", "Abondance", "Ackawi",
+-		"Acorn", "Adelost", "Affidelice au Chablis", "Afuega'l Pitu", "Airag", "Airedale", "Aisy Cendre",
+-		"Allgauer Emmentaler" };
+-
+-}  
+-  
+-
+-//@Override
+-//public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+-//{  
+-//  
+-//    ViewGroup viewGroup = (ViewGroup) super.onCreateView(inflater, container, savedInstanceState);
+-//
+-//    View lvOld = viewGroup.findViewById(android.R.id.list);
+-//    
+-//    final PullToRefreshListView listView = new PullToRefreshListView(getActivity());
+-//    listView.setId(android.R.id.list);
+-//    listView.setLayoutParams(new FrameLayout.LayoutParams(
+-//            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+-//  //  listView.setDrawSelectorOnTop(false);
+-//
+-//    FrameLayout parent = (FrameLayout) lvOld.getParent();
+-//
+-//    parent.removeView(lvOld);
+-//    lvOld.setVisibility(View.GONE);
+-//
+-//    parent.addView(listView, new FrameLayout.LayoutParams(
+-//            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+-//
+-//    return viewGroup;
+-//  
+-//  
+-//  
+-//}
+\ No newline at end of file
+diff --git a/src/com/final_proj/zincone/Genre.java b/src/com/final_proj/zincone/Genre.java
+new file mode 100644
+index 0000000..4fc8246
+--- /dev/null
++++ b/src/com/final_proj/zincone/Genre.java
+@@ -0,0 +1,73 @@
++package com.final_proj.zincone;
++
++import java.util.ArrayList;
++
++import android.app.ListFragment;
++import android.content.Context;
++import android.os.Bundle;
++import android.util.Log;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++import android.widget.AdapterView;
++import android.widget.AdapterView.OnItemClickListener;
++import android.widget.ArrayAdapter;
++import android.widget.ListView;
++
++public class Genre extends ListFragment {
++	
++	ArrayList<String> items;
++	ArrayAdapter arrayAdapter;
++	
++	public static int SELECTED_INDEX = 1;
++	
++	@Override
++	 public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
++		
++		View v = super.onCreateView(inflater, container, savedInstanceState);
++		
++		items = new ArrayList<String>();
++		
++		
++		items.add("Country");
++		items.add("EDM");
++		items.add("Folk");
++		items.add("Hip-hop/Rap");
++		items.add("House");
++		items.add("Indie");
++		items.add("Jazz");
++		items.add("Latin");
++		items.add("Punk");
++		items.add("Reggae");
++		items.add("Rock");
++		Context context = this.getActivity();
++		arrayAdapter = new ArrayAdapter(context,android.R.layout.simple_list_item_single_choice,items);
++		
++		this.setListAdapter(arrayAdapter);
++		
++		
++		return v;
++		
++		
++	}
++	
++	public void onActivityCreated (Bundle savedInstanceState) {
++		super.onActivityCreated(savedInstanceState);
++		this.getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
++		 
++		
++		this.getListView().setSelection(1);
++		
++		
++		this.getListView().setOnItemClickListener(new OnItemClickListener() {
++
++			@Override
++			public void onItemClick(AdapterView<?> arg0, View arg1, int index,
++					long arg3) {
++				
++				SELECTED_INDEX = index;
++			}
++			
++		});
++	}
++}
+diff --git a/src/com/final_proj/zincone/MainActivity.java b/src/com/final_proj/zincone/MainActivity.java
+index 0b73c83..daae4f4 100644
+--- a/src/com/final_proj/zincone/MainActivity.java
++++ b/src/com/final_proj/zincone/MainActivity.java
+@@ -15,6 +15,8 @@ public class MainActivity extends Activity {
+ 	
+ 	Fragment beats;
+ 	
++	
++	
+ 	@Override
+ 	protected void onCreate(Bundle savedInstanceState) {
+ 		super.onCreate(savedInstanceState);
+@@ -28,16 +30,14 @@ public class MainActivity extends Activity {
+ 		
+ 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+ 		
++		ActionBar.Tab beatsTab = actionBar.newTab().setText("Tweets");
+ 		ActionBar.Tab genreTab = actionBar.newTab().setText("Genre");
+ 		
+-		ActionBar.Tab beatsTab = actionBar.newTab().setText("Beats");
+ 		
+-		Fragment genre = new PullToRefreshListFragment();
+ 		
+-		Fragment beats = new AFragmentTab();
+ 		//ActionBar.Tab profileTab = actionBar.newTab().setText("Profile");
+-		genreTab.setTabListener(new TabListener<AFragmentTab>(this, "genre", AFragmentTab.class));
+-		beatsTab.setTabListener(new TabListener<AFragmentTab>(this, "beats", AFragmentTab.class));
++		genreTab.setTabListener(new TabListener<Genre>(this, "genre", Genre.class));
++		beatsTab.setTabListener(new TabListener<Tweets>(this, "beats", Tweets.class));
+ 		
+ 		actionBar.addTab(genreTab);
+ 		actionBar.addTab(beatsTab);
+diff --git a/src/com/final_proj/zincone/Tweets.java b/src/com/final_proj/zincone/Tweets.java
+new file mode 100644
+index 0000000..01e100c
+--- /dev/null
++++ b/src/com/final_proj/zincone/Tweets.java
+@@ -0,0 +1,318 @@
++package com.final_proj.zincone;
++
++
++import java.net.URL;
++import java.net.URLConnection;
++import java.util.ArrayList;
++import java.util.HashMap;
++import java.util.LinkedList;
++
++import twitter4j.Query;
++import twitter4j.QueryResult;
++import twitter4j.Twitter;
++import twitter4j.TwitterException;
++import twitter4j.TwitterFactory;
++import twitter4j.conf.ConfigurationBuilder;
++import android.content.Context;
++import android.graphics.Bitmap;
++import android.graphics.BitmapFactory;
++import android.os.AsyncTask;
++import android.os.Bundle;
++import android.util.Log;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.View.OnFocusChangeListener;
++import android.view.ViewGroup;
++import android.widget.ArrayAdapter;
++import android.widget.ImageView;
++import android.widget.SimpleAdapter;
++import android.widget.TextView;
++
++import com.example.tweetbeats.R;
++import com.handmark.pulltorefresh.extras.listfragment.PullToRefreshBaseListFragment;
++import com.handmark.pulltorefresh.extras.listfragment.PullToRefreshListFragment;
++import com.handmark.pulltorefresh.library.PullToRefreshBase;
++import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
++import com.handmark.pulltorefresh.library.PullToRefreshListView;
++
++
++public class Tweets extends PullToRefreshBaseListFragment<PullToRefreshListView>
++{
++	 private LinkedList<String> mListItems;
++	 private ArrayAdapter<String> mAdapter;
++	 private PullToRefreshListFragment mPullRefreshListFragment;
++	 Context context;
++	 private PullToRefreshListView mPullToRefreshListView;
++	 
++	 private final static String CONSUMER_KEY = "bDfcAsCzCAyTtKFmdamZw";
++	 
++	     private final static String CONSUMER_KEY_SECRET = "7QHC23uNVWa8U2soN2sXSAzKlEKDBLMfEOTpRp7Yc4";
++	  
++
++	ArrayList<HashMap<String, String>> list;
++		
++	SimpleAdapter adapter;
++	View v;
++	
++	ConfigurationBuilder cb;
++	TwitterFactory tf;
++	Twitter twitter;
++	ArrayList<String> genres;
++
++@Override
++protected PullToRefreshListView onCreatePullToRefreshListView(
++		LayoutInflater inflater, Bundle savedInstanceState) {
++	
++	//set up twitter API access
++	//initialize arraylist that holds tweeter info
++		list = new ArrayList<HashMap<String,String>>();
++
++		genres = new ArrayList<String>();
++		
++		
++		genres.add("Country");
++		genres.add("EDM");
++		genres.add("Folk");
++		genres.add("Rap");
++		genres.add("House");
++		genres.add("Indie");
++		genres.add("Jazz");
++		genres.add("Latin");
++		genres.add("Punk");
++		genres.add("Reggae");
++		genres.add("Rock");
++
++
++	
++	
++	context = this.getActivity();
++	
++	adapter = new SimpleAdapter(context, list, R.layout.row,
++			new String[] { "username", "tweet", "pic"}, new int[] {
++					R.id.tweeter, R.id.tweet, R.id.userImage }) {
++		public View getView(int position, View convertView, ViewGroup parent) {
++
++		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
++		View v = inflater.inflate(R.layout.row, null);
++		
++		TextView username = (TextView) v.findViewById(R.id.tweeter);
++		
++		username.setText(list.get(position).get("username"));
++		
++		TextView tweet = (TextView) v.findViewById(R.id.tweet);
++		
++		tweet.setText(list.get(position).get("tweet"));
++		
++		ImageView profilePic = (ImageView)v.findViewById(R.id.userImage);
++		
++		ImgDownload imgDL = new ImgDownload(list.get(position).get("pic"),profilePic);
++		
++		imgDL.execute();
++		
++		return v;
++		}
++	};
++	
++	mPullToRefreshListView = new PullToRefreshListView(context);
++	/*
++	mListItems = new LinkedList<String>();
++	mListItems.addAll(Arrays.asList(mStrings));
++	mAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, mListItems);
++	*/
++	
++	new GetDataTask().execute();
++	
++	mPullToRefreshListView.setOnRefreshListener(new OnRefreshListener() {
++
++		@Override
++		public void onRefresh(PullToRefreshBase refreshView) {
++			new GetDataTask().execute();
++		}
++		
++	});
++	
++	mPullToRefreshListView.setOnFocusChangeListener(new OnFocusChangeListener() {
++
++		@Override
++		public void onFocusChange(View arg0, boolean arg1) {
++			Log.v("MZ", "ON FOCUS CHANGED");
++			
++		}
++		
++	});
++	// You can also just use setListAdapter(mAdapter) or
++	// mPullRefreshListView.setAdapter(mAdapter)
++	mPullToRefreshListView.setAdapter(adapter);
++	
++	//mPullRefreshListFragment.setListShown(true);
++
++
++	//mPullToRefreshListView.onRefreshComplete();
++	
++	//mPullToRefreshListView.setVisibility(View.VISIBLE);
++	
++	
++	
++	return mPullToRefreshListView;
++}
++
++
++
++@Override
++public void setUserVisibleHint(boolean isVisibleToUser) {
++    super.setUserVisibleHint(isVisibleToUser);
++
++    if (isVisibleToUser == true) { 
++        Log.v("MZ", "this fragment is now visible");
++        new GetDataTask().execute();
++    }
++
++    else if (isVisibleToUser == false) {  
++        Log.v("MZ", "this fragment is now invisible");
++
++    }
++}
++
++
++public void onStart() {
++	super.onStart();
++	this.setListShown(true);
++}
++
++private class ImgDownload extends AsyncTask {
++    private String requestUrl;
++    private ImageView view;
++    private Bitmap pic;
++
++    private ImgDownload(String requestUrl, ImageView view) {
++        this.requestUrl = requestUrl;
++        this.view = view;
++    }
++
++    @Override
++    protected Object doInBackground(Object... objects) {
++        try {
++        	URL url = new URL(requestUrl);
++        	
++            URLConnection conn = url.openConnection();
++            pic = BitmapFactory.decodeStream(conn.getInputStream());
++  
++        } catch (Exception ex) {
++        }
++        return null;
++    }
++
++    @Override
++    protected void onPostExecute(Object o) {
++        view.setImageBitmap(pic);
++    }
++}
++
++
++
++private class GetDataTask extends AsyncTask<Void, Void, Void> {
++
++	@Override
++	protected Void doInBackground(Void... voids) {
++		// Simulates a background job.
++		/*
++		try {
++			Thread.sleep(2000);
++		} catch (InterruptedException e) {
++		}
++	*/
++		cb = new ConfigurationBuilder();
++		cb.setDebugEnabled(true)
++		.setOAuthConsumerKey("bDfcAsCzCAyTtKFmdamZw")
++		.setOAuthConsumerSecret("7QHC23uNVWa8U2soN2sXSAzKlEKDBLMfEOTpRp7Yc4")
++		.setOAuthAccessToken("781588531-vWqYmNj7S0Ef9QitEpEj8H2ueX747oHRCxggusOD")
++		.setOAuthAccessTokenSecret("cmHppptHPHsdvaPrkqRVQO5zEG8QaLfW3WfuDYyCJE");
++		tf = new TwitterFactory(cb.build());
++		
++		twitter = tf.getInstance();
++
++		//Twitter twitter = new TwitterFactory().getInstance();
++			
++		//twitter.setOAuthConsumer(CONSUMER_KEY, CONSUMER_KEY_SECRET);
++		
++		 Query query = new Query("#" + genres.get(Genre.SELECTED_INDEX));
++		 query.count(30);
++		 QueryResult result = null;
++		 
++		try {
++			result = twitter.search(query);
++		} catch (TwitterException e) {
++			// TODO Auto-generated catch block
++			e.printStackTrace();
++		}
++		
++		HashMap<String,String> hashmap;
++		  int counter = 0;
++		  
++		  list.clear();
++		    for (twitter4j.Status status : result.getTweets()) {
++		      
++		    	if (counter < 30) {
++		    	hashmap = new HashMap<String,String>();
++		    	hashmap.put("username", status.getUser().getScreenName());
++		    	hashmap.put("tweet",  status.getText());
++		    	hashmap.put("pic", status.getUser().getProfileImageURL());
++		    	
++		    	list.add(hashmap);
++		    	} else break;
++		    	counter++;
++		    }
++		
++		
++		
++		return null;
++	}
++
++	@Override
++	protected void onPostExecute(Void v) {
++		
++		
++		//mListItems.addFirst("Added after refresh...");
++		//mAdapter.notifyDataSetChanged();
++		adapter.notifyDataSetChanged();
++		// Call onRefreshComplete when the list has been refreshed.
++		mPullToRefreshListView.onRefreshComplete();
++		
++	}
++	
++	
++	
++}
++
++
++
++}  
++  
++
++//@Override
++//public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
++//{  
++//  
++//    ViewGroup viewGroup = (ViewGroup) super.onCreateView(inflater, container, savedInstanceState);
++//
++//    View lvOld = viewGroup.findViewById(android.R.id.list);
++//    
++//    final PullToRefreshListView listView = new PullToRefreshListView(getActivity());
++//    listView.setId(android.R.id.list);
++//    listView.setLayoutParams(new FrameLayout.LayoutParams(
++//            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
++//  //  listView.setDrawSelectorOnTop(false);
++//
++//    FrameLayout parent = (FrameLayout) lvOld.getParent();
++//
++//    parent.removeView(lvOld);
++//    lvOld.setVisibility(View.GONE);
++//
++//    parent.addView(listView, new FrameLayout.LayoutParams(
++//            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
++//
++//    return viewGroup;
++//  
++//  
++//  
++//}
+\ No newline at end of file

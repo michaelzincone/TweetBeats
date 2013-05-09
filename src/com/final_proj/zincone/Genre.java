@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.CheckedTextView;
 import android.widget.ListView;
 
 public class Genre extends ListFragment {
@@ -28,7 +28,7 @@ public class Genre extends ListFragment {
 		
 		items = new ArrayList<String>();
 		
-		
+		//set up genres
 		items.add("Country");
 		items.add("EDM");
 		items.add("Folk");
@@ -41,7 +41,11 @@ public class Genre extends ListFragment {
 		items.add("Reggae");
 		items.add("Rock");
 		Context context = this.getActivity();
+		
+		//set up simple array adapter
 		arrayAdapter = new ArrayAdapter(context,android.R.layout.simple_list_item_single_choice,items);
+		
+		
 		
 		this.setListAdapter(arrayAdapter);
 		
@@ -53,12 +57,14 @@ public class Genre extends ListFragment {
 	
 	public void onActivityCreated (Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		
+		//set choice mode to get radio buttons
 		this.getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 		 
+		//set the correct item checked (default is index=1)
+		this.getListView().setItemChecked(SELECTED_INDEX, true);
 		
-		this.getListView().setSelection(1);
-		
-		
+		//used to change the selected index to be read by the Tweets page
 		this.getListView().setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
